@@ -56,7 +56,10 @@ X_train, X_test, y_train, y_test = train_test_split(X,y, test_size=0.2, random_s
 
 batch_size = 32
 epochs = 10
-print(model.fit(X_train, y_train, epochs = epochs, batch_size = batch_size, verbose = 2))
+
+#This is the code that needs to be ran to fit the model
+
+#print(model.fit(X_train, y_train, epochs = epochs, batch_size = batch_size, verbose = 2))
 
 #This is to save the model
-model.save(r"/Users/Noah/Desktop/LSTM/Sentiment/Sentiment_Model.h5")
+#model.save(r"/Users/Noah/Desktop/LSTM/Sentiment/Sentiment_Model.h5")
