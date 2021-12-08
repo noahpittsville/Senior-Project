@@ -21,7 +21,7 @@ dataset.head()
 #and gets rid of things that aren't letters or numbers
 dataset['text'].apply(lambda x: x.lower())
 dataset['text'] = dataset['text'].apply(lambda x: re.sub('[^a-zA-Z0-9\s]',"",x))
-dataset['text'].head()
+print(dataset['text'].head())
 
 #We only want to keep the most frequent represented by num_words
 tokenizer = Tokenizer(num_words=5000, split= " ")
@@ -32,21 +32,21 @@ X = tokenizer.texts_to_sequences(dataset['text'].values)
 X = pad_sequences(X)
 print(X[:7])
 
-#Now we do embedding layer
-#This will convert the numbers within the array which is only
-#a single number to vector space. This puts similar words close to one another
-model = Sequential()
-model.add(Embedding(5000, 256, input_length = X.shape[1]))
+# #Now we do embedding layer
+# #This will convert the numbers within the array which is only
+# #a single number to vector space. This puts similar words close to one another
+# model = Sequential()
+# model.add(Embedding(5000, 256, input_length = X.shape[1]))
 
-#We dropout 30%
-model.add(Dropout(0.3))
-model.add(LSTM(256, return_sequences=True, dropout = 0.3, recurrent_dropout=0.2))
-model.add(LSTM(256, dropout = 0.3, recurrent_dropout = 0.2))
+# #We dropout 30%
+# model.add(Dropout(0.3))
+# model.add(LSTM(256, return_sequences=True, dropout = 0.3, recurrent_dropout=0.2))
+# model.add(LSTM(256, dropout = 0.3, recurrent_dropout = 0.2))
 
-#We use dense as 3 because there is positve, negative and neutral
-model.add(Dense(3, activation = 'softmax'))
-model.compile(loss = 'categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-print(model.summary())
+# #We use dense as 3 because there is positve, negative and neutral
+# model.add(Dense(3, activation = 'softmax'))
+# model.compile(loss = 'categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+# print(model.summary())
 
 y = pd.get_dummies(dataset['airline_sentiment']).values
 [print(dataset['airline_sentiment'][i],y[i]) for i in range(0,7)]
@@ -64,7 +64,10 @@ epochs = 10
 #This is to save the model
 #model.save(r"/Users/Noah/Desktop/LSTM/Sentiment/Sentiment_Model.h5")
 
+#Load the model
+model = load_model(r"/Users/Noah/Desktop/LSTM/Sentiment/Sentiment_Model.h5")
+
 #Code to take a look under the hood to see what is predicting correctly and not correctly
 
-#prediction = model.predict(X_test)
-#[print(dataset['text'][i], prediction[i], y_test[i]) for i in range in range(0,7)]
+prediction = model.predict(X_test)
+[print(dataset['text'][i], prediction[i], y_test[i]) for i in range(0,7)]

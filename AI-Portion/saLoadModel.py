@@ -1,5 +1,6 @@
 #Sentiment Analysis
 import pickle
+import keras_preprocessing
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -25,19 +26,19 @@ dataset['text'].apply(lambda x: x.lower())
 dataset['text'] = dataset['text'].apply(lambda x: re.sub('[^a-zA-Z0-9\s]',"",x))
 print(dataset['text'].head())
 
-# #We only want to keep the most frequent represented by num_words
-# tokenizer = Tokenizer(num_words=5000, split= " ")
-# tokenizer.fit_on_texts(dataset['text'].values)
+#We only want to keep the most frequent represented by num_words
+tokenizer = Tokenizer(num_words=5000, split= " ")
+tokenizer.fit_on_texts(dataset['text'].values)
 
-# #save the tokenizer
-# with open('tokenizer.pickle', 'wb') as handle:
-#     pickle.dump(tokenizer,handle,protocol=pickle.HIGHEST_PROTOCOL)
+#save the tokenizer
+with open('tokenizer.pickle', 'wb') as handle:
+    pickle.dump(tokenizer,handle,protocol=pickle.HIGHEST_PROTOCOL)
 
-tokenizer_location = r"/Users/Noah/Desktop/data/tokenizer.pickle"
+# tokenizer_location = r"/Users/Noah/Desktop/data/tokenizer.pickle"
 
-#Code to load the tokenizer
-with open(tokenizer_location, 'rb') as handle:
-    tokenizer = pickle.load(handle)
+# #Code to load the tokenizer
+# with open(tokenizer_location, 'rb') as handle:
+#     tokenizer = pickle.load(handle)
 
 #Now convert the text to a set of arrays that represent the words
 X = tokenizer.texts_to_sequences(dataset['text'].values)
@@ -68,7 +69,7 @@ y = pd.get_dummies(dataset['sentiment']).values
 X_train, X_test, y_train, y_test = train_test_split(X,y, test_size=0.2, random_state = 0)
 
 # batch_size = 32
-# epochs = 10
+# epochs = 8
 
 # #This is the code that needs to be ran to fit the model
 # print(model.fit(X_train, y_train, epochs = epochs, batch_size = batch_size, verbose = 2))
@@ -77,8 +78,9 @@ X_train, X_test, y_train, y_test = train_test_split(X,y, test_size=0.2, random_s
 # model.save(r"/Users/Noah/Desktop/LSTM/Sentiment/small_tweets.h5")
 
 #This is is to load the model once we have it and using it 
+model = load_model(r"/Users/Noah/Desktop/LSTM/Sentiment/small_tweets.h5")
 
 #Code to take a look under the hood to see what is predicting correctly and not correctly
 
-# prediction = model.predict(X_test)
-# [print(dataset['text'][i], prediction[i], y_test[i]) for i in range in range(0,7)]
+prediction = model.predict(X_test)
+[print(dataset['text'][i], prediction[i], y_test[i]) for i in range(0,7)]
