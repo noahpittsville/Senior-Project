@@ -81,6 +81,6 @@ X_train, X_test, y_train, y_test = train_test_split(X,y, test_size=0.2, random_s
 model = load_model(r"/Users/Noah/Desktop/LSTM/Sentiment/small_tweets.h5")
 
 #Code to take a look under the hood to see what is predicting correctly and not correctly
-
+print(X_test)
 prediction = model.predict(X_test)
 [print(dataset['text'][i], prediction[i], y_test[i]) for i in range(0,7)]
