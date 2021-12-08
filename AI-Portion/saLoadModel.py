@@ -1,3 +1,8 @@
+# Creator: Noah Pitts 
+# This code is an extension of saStocks.py. Its purpose is to now apply the saved model
+# and tokenizer to stock-tweets that are unlabeled. It will then classify these as
+# positive, negative or neutral.
+
 #Sentiment Analysis
 import pickle
 import keras_preprocessing
@@ -66,7 +71,7 @@ y = pd.get_dummies(dataset['sentiment']).values
 [print(dataset['sentiment'][i],y[i]) for i in range(0,7)]
 
 #This is the code involved in actually training the model
-X_train, X_test, y_train, y_test = train_test_split(X,y, test_size=0.2, random_state = 0)
+X_train, X_test, y_train, y_test = train_test_split(X,y, test_size=0.5, random_state = 0)
 
 # batch_size = 32
 # epochs = 8
@@ -84,3 +89,4 @@ model = load_model(r"/Users/Noah/Desktop/LSTM/Sentiment/small_tweets.h5")
 print(X_test)
 prediction = model.predict(X_test)
 [print(dataset['text'][i], prediction[i], y_test[i]) for i in range(0,7)]
+print(len(prediction))

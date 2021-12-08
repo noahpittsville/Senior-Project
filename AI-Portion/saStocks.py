@@ -1,3 +1,8 @@
+# Creator: Noah Pitts 
+# This code extends from SA, now applying the sentiment analysis to tweets regarding the stock market. 
+# It then saves both the model and what is called the "tokenizer" (an object responsible for preprocessing the data)
+# which can then later be called and applied on new data
+
 #Sentiment Analysis
 import pickle
 import numpy as np

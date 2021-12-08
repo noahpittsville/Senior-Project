@@ -1,3 +1,8 @@
+# Creator: Noah Pitts
+# This code provides the intial set up to the project. This code creates a sentiment analysis model 
+# using tweets regarding airlines. The tweets from the dataset have all been labeled as positive,
+# negative or netural
+
 #Sentiment Analysis
 import numpy as np
 import pandas as pd
