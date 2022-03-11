@@ -233,15 +233,18 @@ def TwitterLiveStream(search_type):
         data.append([tweet.created_at, tweet.user.screen_name, tweet.text])
 
     makeDataTable('LiveStream {}'.format(search_type))
-    print(df)
+    #print(df)
 
 
 def makeDataTable(element):
     # SPECIFIC SEARCHES
+    print("before maketable")
     if element is 'HomeTimeline':
         data, columns = homeTimeline()
         df = pd.DataFrame(data, columns=columns)
+        print("BEFORE")
         df.to_csv('StaticHomeTimeline.csv')
+        print("AFTER")
     if element is 'UserTimeline':
         data, columns = userTimeline()
         df = pd.DataFrame(data, columns=columns)
