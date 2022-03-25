@@ -7,12 +7,12 @@ def twitterMenu():
               '[1] Livestream data\n'
               '[2] Query data')
         menu_choice = int(input('Enter a Menu Number: '))
-        if menu_choice is 0:
+        if menu_choice == 0:
             in_menu = False
             return
-        elif menu_choice is 1:
+        elif menu_choice == 1:
             tmenuOne()
-        elif menu_choice is 2:
+        elif menu_choice == 2:
             tmenuTwo()
         else:
             print('Try again.')
@@ -25,13 +25,13 @@ def tmenuOne():
               '[1] Run\n'
               '[2] Option 2')
         menu_choice = int(input('Enter a Menu Number: '))
-        if menu_choice is 0:
+        if menu_choice == 0:
             in_menu_one = False
             return
-        elif menu_choice is 1:
+        elif menu_choice == 1:
             #exec(open("TwitterScraperLivestream.py").read())
             TwitterLiveStream('keywords')
-        elif menu_choice is 2:
+        elif menu_choice == 2:
             print('TODO')
         else:
             print('Try again.')
@@ -47,18 +47,18 @@ def tmenuTwo():
               '[4] Filter by Hashtags\n'
               '[5] Filter by Keywords')
         menu_choice = int(input('Enter a Menu Number: '))
-        if menu_choice is 0:
+        if menu_choice == 0:
             in_menu_two = False
             return
-        elif menu_choice is 1:
+        elif menu_choice == 1:
             trunMenu('HomeTimeline')
-        elif menu_choice is 2:
+        elif menu_choice == 2:
             trunMenu('UserTimeline')
-        elif menu_choice is 3:
+        elif menu_choice == 3:
             trunMenu('UserKeywords')
-        elif menu_choice is 4:
+        elif menu_choice == 4:
             trunMenu('HashtagKeywords')
-        elif menu_choice is 5:
+        elif menu_choice == 5:
             trunMenu('SearchKeywords')
         else:
             print('Try again.')
@@ -71,12 +71,12 @@ def trunMenu(element):
               '[1] Configure Settings\n'
               '[2] Run')
         menu_choice = int(input('Enter a Menu Number: '))
-        if menu_choice is 0:
+        if menu_choice == 0:
             run_menu = False
             return
-        elif menu_choice is 1:
+        elif menu_choice == 1:
             tconfigureSettings(element)
-        elif menu_choice is 2:
+        elif menu_choice == 2:
             makeTable(element)
             print('{}.csv updated.'.format(element))
         else:
@@ -88,29 +88,29 @@ def tconfigureSettings(element):
     while in_configure_settings == True:
         print('[0] Go Back\n'
               '[1] Set Grab Limit (Current: {})'.format(grab_limit))
-        if element is 'SearchKeywords':
+        if element == 'SearchKeywords':
             print('[2] Edit Keyword List')
-        if element is 'HashtagKeywords':
+        if element == 'HashtagKeywords':
             print('[2] Edit Hashtag List (#)')
-        if element is 'UserKeywords':
+        if element == 'UserKeywords':
             print('[2] Edit User List (@)')
-        if element is 'UserTimeline':
+        if element == 'UserTimeline':
             print('[2] Edit User Timeline List')
         menu_choice = int(input('Enter a Menu Number: '))
-        if menu_choice is 0:
+        if menu_choice == 0:
             in_configure_settings = False
             return
-        elif menu_choice is 1:
+        elif menu_choice == 1:
             grab_limit = int(input('Set Grab Limit: '))
             setSettings('settings', 'limit', grab_limit, 'set')
-        elif menu_choice is 2:
-            if element is 'SearchKeywords':
+        elif menu_choice == 2:
+            if element == 'SearchKeywords':
                 tsearchMenu('Keyword')
-            if element is 'HashtagKeywords':
+            if element == 'HashtagKeywords':
                 tsearchMenu('Hashtag')
-            if element is 'UserKeywords':
+            if element == 'UserKeywords':
                 tsearchMenu('User')
-            if element is 'UserTimeline':
+            if element == 'UserTimeline':
                 tsearchMenu('UserTimeline')
         else:
             print('Try again.')
@@ -124,37 +124,37 @@ def tsearchMenu(search_type):
               '[2] Add\n'
               '[3] Delete'.format(search_type))
         menu_choice = int(input('Enter a Menu Number: '))
-        if menu_choice is 0:
+        if menu_choice == 0:
             in_keyword_menu = False
             return
-        elif menu_choice is 1:
-            if search_type is 'Keyword':
+        elif menu_choice == 1:
+            if search_type == 'Keyword':
                 print(keywords)
-            if search_type is 'Hashtag':
+            if search_type == 'Hashtag':
                 print(hashtags)
-            if search_type is 'User':
+            if search_type == 'User':
                 print(usernames)
-            if search_type is 'UserTimeline':
+            if search_type == 'UserTimeline':
                 print(timeline)
-        elif menu_choice is 2:
+        elif menu_choice == 2:
             value = input('Add {}: '.format(search_type))
-            if search_type is 'Keyword':
+            if search_type == 'Keyword':
                 setSettings('search', 'key', str(value), 'add')
-            if search_type is 'Hashtag':
+            if search_type == 'Hashtag':
                 setSettings('search', 'hash', str(value), 'add')
-            if search_type is 'User':
+            if search_type == 'User':
                 setSettings('search', 'user', str(value), 'add')
-            if search_type is 'User Timeline':
+            if search_type == 'User Timeline':
                 setSettings('search', 'user_timeline', str(value), 'add')
-        elif menu_choice is 3:
+        elif menu_choice == 3:
             value = input('Delete {}: '.format(search_type))
-            if search_type is 'Keyword':
+            if search_type == 'Keyword':
                 setSettings('search', 'key', str(value), 'delete')
-            elif search_type is 'Hashtag':
+            elif search_type == 'Hashtag':
                 setSettings('search', 'hash', str(value), 'delete')
-            elif search_type is 'User':
+            elif search_type == 'User':
                 setSettings('search', 'user', str(value), 'delete')
-            elif search_type is 'User Timeline':
+            elif search_type == 'User Timeline':
                 setSettings('search', 'user_timeline', str(value), 'delete')
         else:
             print('Try again.')
