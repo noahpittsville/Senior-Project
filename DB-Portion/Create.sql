@@ -4,6 +4,7 @@ DROP TABLE sentimentHistory
 DROP TABLE userList
 DROP TABLE stockInfo
 DROP TABLE companyList
+DROP TABLE tweetTest
 
 --Keep track of users & their data, will see expansion as website is developed.
 CREATE TABLE userList (
@@ -43,6 +44,12 @@ CREATE TABLE sentimentHistory (
     companyID VARCHAR(10) NOT NULL FOREIGN KEY REFERENCES companyList,
     sentScore VARCHAR(255) NOT NULL
 )
+CREATE TABLE tweetTest (
+    tweetID int IDENTITY(1,1) NOT NULL PRIMARY KEY,
+    dateTweet VARCHAR(32) NOT NULL,
+    userName VARCHAR(32) NOT NULL,
+    tweetContent VARCHAR(300) NOT NULL
+)
 
 --Example inserts.
 
@@ -73,11 +80,15 @@ INSERT INTO sentimentHistory(companyID, sentScore) VALUES
 ('MSFT', 'Positive'),
 ('MSFT', 'Positive')
 
+INSERT INTO tweetTest(dateTweet, userName, tweetContent) VALUES
+('2022-03-09 16:51:08+00:00', 'Tesla', '🎨 at Giga Berlin https://t.co/ojIvG9cg4F')
+
 
 SELECT * from userList
 SELECT * from tracking
 SELECT * from companyList
 SELECT * from StockInfo
 select * from sentimentHistory
+SELECT * from tweetTest
 SELECT * from sys.tables
 GO
