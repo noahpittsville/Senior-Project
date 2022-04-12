@@ -77,7 +77,7 @@ def trunMenu(element):
         elif menu_choice is 1:
             tconfigureSettings(element)
         elif menu_choice is 2:
-            makeTable(element)
+            makeDataTable(element)
             print('{}.csv updated.'.format(element))
         else:
             print('Try again.')

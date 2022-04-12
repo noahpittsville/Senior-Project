@@ -25,7 +25,7 @@ def pushTweets(filename, location = 'remote'):
     if (location == 'local'):
         server = "localhost\SENIORPROJTEST"
     else:
-        server = "50.91.112.92\SENIORPROJTEST"
+        server = "50.91.112.92"
     database = "testDB"
     username = "serverConTest"
     password = "serverTest"
@@ -50,7 +50,7 @@ def pullTweets(location = 'remote'):
     if (location == 'local'):
         server = "localhost\SENIORPROJTEST"
     else:
-        server = "50.91.112.92\SENIORPROJTEST"
+        server = "50.91.112.92"
     database = "testDB"
     username = "serverConTest"
     password = "serverTest"
@@ -70,7 +70,8 @@ def pullTweets(location = 'remote'):
     
 
 
-
+#Use the argument local for testing with the same machine.
+#Remove the local argument when connecting from a remote machine.
 #pushTweets('StaticHomeTimeline.csv', 'local')
 
 print(pullTweets('local'))
