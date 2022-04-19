@@ -5,6 +5,7 @@ DROP TABLE userList
 DROP TABLE stockInfo
 DROP TABLE companyList
 DROP TABLE tweetTest
+DROP TABLE arc_tweetTest
 
 --Keep track of users & their data, will see expansion as website is developed.
 CREATE TABLE userList (
@@ -50,7 +51,12 @@ CREATE TABLE tweetTest (
     userName VARCHAR(32) NOT NULL,
     tweetContent VARCHAR(300) NOT NULL
 )
-
+CREATE TABLE arc_tweetTest (
+    tweetID int NOT NULL PRIMARY KEY,
+    dateTweet VARCHAR(32) NOT NULL,
+    userName VARCHAR(32) NOT NULL,
+    tweetContent VARCHAR(300) NOT NULL
+)
 --Example inserts.
 
 INSERT INTO userList (firstName, lastName) VALUES 
@@ -83,6 +89,8 @@ INSERT INTO sentimentHistory(companyID, sentScore) VALUES
 INSERT INTO tweetTest(dateTweet, userName, tweetContent) VALUES
 ('2022-03-09 16:51:08+00:00', 'Tesla', '🎨 at Giga Berlin https://t.co/ojIvG9cg4F')
 
+INSERT INTO arc_tweetTest SELECT * FROM tweetTest
+
 
 SELECT * from userList
 SELECT * from tracking
@@ -90,5 +98,6 @@ SELECT * from companyList
 SELECT * from StockInfo
 select * from sentimentHistory
 SELECT * from tweetTest
+SELECT * from arc_tweetTest
 SELECT * from sys.tables
 GO

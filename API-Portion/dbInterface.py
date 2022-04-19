@@ -19,7 +19,20 @@ import pyodbc
 import time
 
 
-
+def archiveTweets(location = 'remote'):
+    if (location == 'local'):
+        server = "localhost\SENIORPROJTEST"
+    else:
+        server = "50.91.112.92"
+    database = "testDB"
+    username = "serverConTest"
+    password = "serverTest"
+    cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};Server='+server+';DATABASE='+database+';UID='+username+';PWD='+password)
+    cursor = cnxn.cursor()
+    cursor.execute("""INSERT INTO arc_tweetTest SELECT * from tweetTest""")
+    cursor.execute("""DELETE FROM tweetTest""")
+    cnxn.commit()
+    print('Tweets Archived')
 
 def pushTweets(filename, location = 'remote'):
     if (location == 'local'):
@@ -69,9 +82,11 @@ def pullTweets(location = 'remote'):
 
     
 
+#TESTING
 
 #Use the argument local for testing with the same machine.
 #Remove the local argument when connecting from a remote machine.
-#pushTweets('StaticHomeTimeline.csv', 'local')
 
-print(pullTweets('local'))
+#pushTweets('StaticHomeTimeline.csv', 'local')
+#print(pullTweets('local'))
+#archiveTweets('local')
