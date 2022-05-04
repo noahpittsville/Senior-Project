@@ -11,7 +11,9 @@ DROP TABLE arc_tweetTest
 CREATE TABLE userList (
     userID int IDENTITY(1,1) NOT NULL PRIMARY KEY,
     firstName VARCHAR(255) NOT NULL,
-    lastName VARCHAR(255) NOT NULL
+    lastName VARCHAR(255) NOT NULL,
+    userName VARCHAR(255) NOT NULL,
+    passWrd VARCHAR(255) NOT NULL
 )
 --Keep track of basic company information
 CREATE TABLE companyList (
@@ -26,11 +28,13 @@ CREATE TABLE companyList (
 CREATE TABLE stockInfo (
     dailyID int IDENTITY(1,1) NOT NULL PRIMARY KEY,
     inputDate DATETIME DEFAULT CURRENT_TIMESTAMP,
+    infoDate DATE NOT NULL,
     stockID VARCHAR(10) NOT NULL FOREIGN KEY REFERENCES companyList,
     openPrice DECIMAL(9,2) NULL,
-    closePrice DECIMAL(9,2) NULL,
     highPrice DECIMAL(9,2) NULL,
     lowPrice DECIMAL(9,2) NULL,
+    closePrice DECIMAL(9,2) NULL,
+    adjClosePrice DECIMAL(9,2) NULL,
     volume INT NULL
 )
 --Relational table connecting users and their tracked stock.
@@ -47,30 +51,30 @@ CREATE TABLE sentimentHistory (
 )
 CREATE TABLE tweetTest (
     tweetID int IDENTITY(1,1) NOT NULL PRIMARY KEY,
-    dateTweet VARCHAR(32) NOT NULL,
+    dateTweet DATE NOT NULL,
     userName VARCHAR(32) NOT NULL,
     tweetContent VARCHAR(300) NOT NULL
 )
 CREATE TABLE arc_tweetTest (
     tweetID int NOT NULL PRIMARY KEY,
-    dateTweet VARCHAR(32) NOT NULL,
+    dateTweet DATE NOT NULL,
     userName VARCHAR(32) NOT NULL,
     tweetContent VARCHAR(300) NOT NULL
 )
 --Example inserts.
 
-INSERT INTO userList (firstName, lastName) VALUES 
-('Jim', 'Everyman'),
-('Joe', 'Mama'),
-('Johny', 'Test')
+INSERT INTO userList (firstName, lastName, userName, passWrd) VALUES 
+('Jim', 'Everyman', 'JimmyTheMan', 'SomeHash'),
+('Joe', 'Mama', 'HaGotEm', 'SomeHash'),
+('Johny', 'Test', 'GottaTest', 'SomeHash')
 
 INSERT INTO companyList (companyID, companyName, founded, worth, sentiment) VALUES
 ('AAPL', 'Apple', '1976-4-1', 3650, 'Neutral'),
 ('MSFT', 'Microsoft', '1975-4-1', 1610, 'Positive')
 
-INSERT INTO stockInfo (stockID, openPrice, closePrice, highPrice, lowPrice, volume) VALUES
-('AAPL', 174.91, 175.08, 176.75, 173.92, 108.73),
-('MSFT', 334.41, 334.97, 336.49, 332.12, 21.95)
+INSERT INTO stockInfo (stockID, infoDate, openPrice, closePrice, highPrice, lowPrice, volume) VALUES
+('AAPL', '2020-10-20', 174.91, 175.08, 176.75, 173.92, 108.73),
+('MSFT', '2020-10-20', 334.41, 334.97, 336.49, 332.12, 21.95)
 
 INSERT INTO tracking (userID, stockID) VALUES
 (1, 'AAPL'),
