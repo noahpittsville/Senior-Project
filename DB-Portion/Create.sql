@@ -53,14 +53,28 @@ CREATE TABLE tweetTest (
     tweetID int IDENTITY(1,1) NOT NULL PRIMARY KEY,
     dateTweet DATE NOT NULL,
     userName VARCHAR(32) NOT NULL,
-    tweetContent VARCHAR(300) NOT NULL
+    tweetContent VARCHAR(1200) NOT NULL
 )
 CREATE TABLE arc_tweetTest (
     tweetID int NOT NULL PRIMARY KEY,
     dateTweet DATE NOT NULL,
     userName VARCHAR(32) NOT NULL,
-    tweetContent VARCHAR(300) NOT NULL
+    tweetContent VARCHAR(1200) NOT NULL
 )
+GO
+
+--Triggers--
+CREATE TRIGGER cleanDuplicates
+ON tweetTest
+AFTER INSERT AS
+DELETE T
+FROM
+(
+Select *, dupRank = ROW_NUMBER() OVER (PARTITION BY tweetContent ORDER BY (SELECT NULL)) FROM tweetTest) AS T
+WHERE dupRank > 1
+select * from tweetTest
+
+GO
 --Example inserts.
 
 INSERT INTO userList (firstName, lastName, userName, passWrd) VALUES 

@@ -52,8 +52,8 @@ def pushTweets(filename, location = 'remote'):
     df = pd.read_csv(file_input)
 
     for index, col in df.iterrows():
-        print(col['Time'], col['User'], col['Tweet'])
-        cursor.execute("""INSERT INTO tweetTest (dateTweet, userName, tweetContent) VALUES (?,?,?)""",col['Time'], col['User'], col['Tweet'])
+        print(col['Date'], col['User'], col['Tweet'])
+        cursor.execute("""INSERT INTO tweetTest (dateTweet, userName, tweetContent) VALUES (?,?,?)""",col['Date'], col['User'], col['Tweet'])
         count+=1
     cnxn.commit()
     print('Rows Inserted: ', str(count))
@@ -61,7 +61,8 @@ def pushTweets(filename, location = 'remote'):
     df.to_csv(str(currentTime) + filename)
 
 #location: can be ignored if running remote, only used for local testing
-def pullTweets(location = 'remote'):
+#OutputFile: The name of the output file.
+def pullTweets(outputFile = 'pulledTweets.csv', location = 'remote'):
     if (location == 'local'):
         server = "localhost\SENIORPROJTEST"
     else:
@@ -73,12 +74,18 @@ def pullTweets(location = 'remote'):
     cursor = cnxn.cursor()
     outputString = ""
     cursor.execute("SELECT * FROM tweetTest")
+    outData = {'date': [], 'content':[]}
 
     row = cursor.fetchone()
     while row:
-        print(str(row[0]) + ',' + str(row[1]) + ',' + str(row[2]) + ',' + str(row[3]))
+        #print(str(row[0]) + ',' + str(row[1]) + ',' + str(row[2]) + ',' + str(row[3]))
         outputString += str(row[0]) + ',' + str(row[1]) + ',' + str(row[3]) + '\n'
+        outData['date'].append(str(row[1]))
+        outData['content'].append(str(row[3]))
         row = cursor.fetchone()
+
+    df = pd.DataFrame(outData)
+    df.to_csv(outputFile)
     
     return outputString
 
@@ -119,6 +126,6 @@ def pushStockInfo(filename, stockSymbol, location = 'remote'):
 #Remove the local argument when connecting from a remote machine.
 
 #pushTweets('StaticHomeTimeline.csv', 'local')
-#print(pullTweets('local'))
+print(pullTweets('testFile.csv','local'))
 #archiveTweets('local')
 #pushStockInfo('stock_prices.csv', 'AAPL', 'local')
