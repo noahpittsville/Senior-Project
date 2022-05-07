@@ -109,7 +109,7 @@ def pushStockInfo(filename, stockSymbol, location = 'remote'):
 
     for index, col in df.iterrows():
         print(col['Date'], col['Open'], col['High'], col['Low'], col['Close'], col['Adj Close'], col['Volume'])
-        cursor.execute("""INSERT INTO stockInfo (stockID, infoDate, openPrice, highPrice, lowPrice, closePrice, adjClosePrice, volume) VALUES (?,?,?,?,?,?,?,?b)""",
+        cursor.execute("""INSERT INTO stockInfo (stockID, infoDate, openPrice, highPrice, lowPrice, closePrice, adjClosePrice, volume) VALUES (?,?,?,?,?,?,?,?)""",
         stockSymbol, col['Date'], col['Open'], col['High'], col['Low'], col['Close'], col['Adj Close'], col['Volume'])
         count+=1
     cnxn.commit()
@@ -117,7 +117,28 @@ def pushStockInfo(filename, stockSymbol, location = 'remote'):
     #currentTime = time.strftime("%Y,%m,%d",time.localtime())
     #df.to_csv(str(currentTime) + filename)
     
+def pushSAInfo(filename, location = 'remote'):
+    if (location == 'local'):
+        server = "localhost\SENIORPROJTEST"
+    else:
+        server = "50.91.112.92"
+    database = "testDB"
+    username = "serverConTest"
+    password = "serverTest"
+    cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};Server='+server+';DATABASE='+database+';UID='+username+';PWD='+password)
+    cursor = cnxn.cursor()
+    file_input = filename
+    count = 0
 
+    df = pd.read_csv(file_input)
+
+    for index, col in df.iterrows():
+        print(col['content'], col['Sentiment'])
+        cursor.execute("""INSERT INTO sentimentHistory (tweetContent, sentScore) VALUES (?,?)""",
+        col['content'], col['Sentiment'])
+        count+=1
+    cnxn.commit()
+    print('Rows Inserted: ', str(count))
     
 
 #TESTING

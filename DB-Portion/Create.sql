@@ -46,7 +46,7 @@ CREATE TABLE tracking (
 CREATE TABLE sentimentHistory (
     transID int IDENTITY(1,1) NOT NULL PRIMARY KEY,
     transDate DATETIME DEFAULT CURRENT_TIMESTAMP,
-    companyID VARCHAR(10) NOT NULL FOREIGN KEY REFERENCES companyList,
+    tweetContent VARCHAR(1200) NOT NULL,
     sentScore VARCHAR(255) NOT NULL
 )
 CREATE TABLE tweetTest (
@@ -96,13 +96,6 @@ INSERT INTO tracking (userID, stockID) VALUES
 (2, 'AAPL'),
 (3, 'MSFT')
 
-INSERT INTO sentimentHistory(companyID, sentScore) VALUES
-('AAPL', 'Positive'),
-('AAPL', 'Neutral'),
-('MSFT', 'Neutral'),
-('AAPL', 'Negative'),
-('MSFT', 'Positive'),
-('MSFT', 'Positive')
 
 INSERT INTO tweetTest(dateTweet, userName, tweetContent) VALUES
 ('2022-03-09 16:51:08+00:00', 'Tesla', '🎨 at Giga Berlin https://t.co/ojIvG9cg4F')
