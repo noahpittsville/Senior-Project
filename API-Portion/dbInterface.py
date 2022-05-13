@@ -73,4 +73,4 @@ def pullTweets(location = 'remote'):
 
 #pushTweets('StaticHomeTimeline.csv', 'local')
 
-print(pullTweets('local'))
+print(pullTweets())
