@@ -1,0 +1,63 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap");
+body,
+button {
+    font-family: "Inter", sans-serif;
+}
+
+:root {
+    --offcanvas-width:270px;
+    --topNavbarHeight: 56px; /* stops offcanvas on the left from overlapping the top */
+}
+
+.sidebar-nav {
+    width: var(--offcanvas-width);
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+}
+
+.sidebar-link .dropdown-icon {
+    display: inline-flex;
+    transition: all ease 0.25s;
+}
+
+/* turn carot upside down if saved stocks is clicked */
+.sidebar-link[aria-expanded="true"] .dropdown-icon {
+    transform: rotate(180deg);
+}
+
+.chart-container {
+    width: 100%;
+    height: 60%;
+    margin: auto;
+}
+
+
+@media (min-width: 992px) {
+
+    body {
+        overflow: auto !important;
+    }
+    .offcanvas-backdrop::before {
+        display: none;
+    }
+    main{
+        /* left canvas will not interfere with main page */
+        margin-left: var(--offcanvas-width);
+    }
+    .sidebar-nav {
+        transform: none;
+        /* if page is large enough, offcanvas will show automatically */
+        visibility: visible !important;
+        top: var(--topNavbarHeight);
+        height: calc(100% - var(--topNavbarHeight));
+    }
+}
+
+
+
+
+
+

@@ -9,10 +9,10 @@ DROP TABLE arc_tweetTest
 
 --Keep track of users & their data, will see expansion as website is developed.
 CREATE TABLE userList (
-    userID int IDENTITY(1,1) NOT NULL PRIMARY KEY,
+    userID int IDENTITY(1,1) NOT NULL,
     firstName VARCHAR(255) NOT NULL,
     lastName VARCHAR(255) NOT NULL,
-    userName VARCHAR(255) NOT NULL,
+    userName VARCHAR(255) NOT NULL PRIMARY KEY,
     passWrd VARCHAR(255) NOT NULL
 )
 --Keep track of basic company information
@@ -23,6 +23,11 @@ CREATE TABLE companyList (
     worth DECIMAL(9,2) NULL,
     sentiment VARCHAR(255) NULL
 
+)
+--List of key words used for sorting
+CREATE TABLE companyKeys (
+    companyID VARCHAR(10) NOT NULL FOREIGN KEY REFERENCES companyList,
+    keyWord VARCHAR(128) NOT NULL
 )
 --List of daily stock transaction information
 CREATE TABLE stockInfo (
@@ -39,7 +44,7 @@ CREATE TABLE stockInfo (
 )
 --Relational table connecting users and their tracked stock.
 CREATE TABLE tracking (
-    userID int NOT NULL FOREIGN KEY REFERENCES userList,
+    userName VARCHAR(255) NOT NULL FOREIGN KEY REFERENCES userList,
     stockID VARCHAR(10) NOT NULL FOREIGN KEY REFERENCES companyList
 )
 --Table to contain recorded sentiments, used to aggregate score and double check our analyzer.
@@ -72,7 +77,17 @@ FROM
 (
 Select *, dupRank = ROW_NUMBER() OVER (PARTITION BY tweetContent ORDER BY (SELECT NULL)) FROM tweetTest) AS T
 WHERE dupRank > 1
-select * from tweetTest
+
+GO
+
+CREATE TRIGGER cleanDuplicatesSentiment
+ON sentimentHistory
+AFTER INSERT AS
+DELETE T
+FROM
+(
+Select *, dupRank = ROW_NUMBER() OVER (PARTITION BY tweetContent ORDER BY (SELECT NULL)) FROM sentimentHistory) AS T
+WHERE dupRank > 1
 
 GO
 --Example inserts.

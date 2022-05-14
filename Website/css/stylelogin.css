@@ -1,0 +1,31 @@
+body{
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background: #34495e;
+}
+
+.container{
+    width: 300px;
+    padding: 40px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: lightgrey;
+    text-align: left;
+}
+
+.row{
+    color:black;
+}
+
+h1{
+    text-align: center;
+}
+
+.col-sm-3{
+    text-align: center;
+}
+
+
