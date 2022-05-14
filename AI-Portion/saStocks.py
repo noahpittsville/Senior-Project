@@ -38,8 +38,8 @@ tokenizer.fit_on_texts(dataset['text'].values)
 with open('tokenizer.pickle', 'wb') as handle:
     pickle.dump(tokenizer,handle,protocol=pickle.HIGHEST_PROTOCOL)
 
-tokenizer_location = r"/Users/Noah/Desktop/data/tokenizer.pickle"
-
+# tokenizer_location = r"/Users/Noah/Desktop/data/tokenizer.pickle"
+tokenizer_location = r"/Users/Noah/Desktop/tokenizer.pickle"
 # #Code to load the tokenizer
 # with open(tokenizer_location, 'rb') as handle:
 #     tokenizer = pickle.load(handle)
@@ -73,13 +73,13 @@ y = pd.get_dummies(dataset['sentiment']).values
 X_train, X_test, y_train, y_test = train_test_split(X,y, test_size=0.2, random_state = 0)
 
 batch_size = 32
-epochs = 1
+epochs = 10
 
 #This is the code that needs to be ran to fit the model
-print(model.fit(X_train, y_train, epochs = epochs, batch_size = batch_size, verbose = 2))
+#print(model.fit(X_train, y_train, epochs = epochs, batch_size = batch_size, verbose = 2))
 
 #This is to save the model
-model.save(r"/Users/Noah/Desktop/LSTM/Sentiment/small_tweets.h5")
+model.save(r"/Users/Noah/Desktop/small_tweets.h5")
 
 #This is is to load the model once we have it and using it 
 

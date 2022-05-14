@@ -17,12 +17,12 @@ from keras.preprocessing.text import Tokenizer
 #This helps deal with the different lengths
 from keras.preprocessing.sequence import pad_sequences
 
-file_name = r"/Users/Noah/Desktop/data/labelled_tweets.csv"
-dataset = pd.read_csv(file_name, sep= ';')
+file_name = r"/Users/Noah/Desktop/tweetsDemo.csv"
+dataset = pd.read_csv(file_name, sep= ',')
 dataset = dataset.sample(frac=1).reset_index(drop=True)
 print(dataset.head())
 dataset.shape
-dataset = dataset[['text']]
+dataset = dataset[['content']]
 print(dataset.head())
 
 # Create the dataframe that we are going to send back
@@ -33,9 +33,9 @@ print(df_to_transfer)
 
 #Preprocessing that goes through the code turns everything to lowercase
 #and gets rid of things that aren't letters or numbers
-dataset['text'] = dataset['text'].apply(lambda x: x.lower())
-dataset['text'] = dataset['text'].apply(lambda x: re.sub('[^a-zA-Z0-9\s]',"",x))
-print(dataset['text'].head())
+dataset['content'] =dataset['content'].apply(lambda x: x.lower())
+dataset['content'] = dataset['content'].apply(lambda x: re.sub('[^a-zA-Z0-9\s]',"",x))
+print(dataset['content'].head())
 
 tokenizer_location = r"/Users/Noah/Desktop/data/tokenizer.pickle"
 
@@ -44,8 +44,8 @@ with open(tokenizer_location, 'rb') as handle:
     tokenizer = pickle.load(handle)
 
 #Now convert the text to a set of arrays that represent the words
-X = tokenizer.texts_to_sequences(dataset['text'].values)
-X = pad_sequences(X)
+X = tokenizer.texts_to_sequences(dataset['content'].values)
+X = pad_sequences(X, 54)
 print(X[:7])
 
 # #This turns the sentiment values positive, negative and neutral into vectors
